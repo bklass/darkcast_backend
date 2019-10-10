@@ -10,8 +10,13 @@ routes.get('/tracks', (req, res) => {
     res.status(200).json({ message: 'Hello from Tracks' });
 });
 
-routes.get('/users', (req, res) => {
-    res.status(200).json({ message: 'Hello from Users' });
-});
+routes.route('/users')
+    .get(userController.all)
+    .post(userController.new);
+routes.route('/users/:user_id')
+    .get(userController.view)
+    .patch(userController.update)
+    .put(userController.update)
+    .delete(userController.delete);
 
 module.exports = routes;
