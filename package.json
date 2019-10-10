@@ -1,0 +1,16 @@
+{
+  "name": "backend",
+  "version": "0.0.1",
+  "description": "backend do darkcast",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "bruna k p reque",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongodb": "^3.3.2",
+    "multer": "^1.4.2"
+  }
+}
