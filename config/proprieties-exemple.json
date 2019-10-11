@@ -1,0 +1,9 @@
+{
+    "DB_HOST" : "<Database URL>",
+    "DB_PORT" : <Database Port>,
+    "DB_USER" : "<Database user name>",
+    "DB_PASS" : "<Database user password>",
+    "DB_NAME" : "<Database Name>",
+    "APP_PORT" : <Application Port to Listen>,
+    "APP_ENV" : "<Application Environment>"
+}

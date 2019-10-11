@@ -3,12 +3,15 @@ const userController = require('../controller/userController');
 const trackController = require('../controller/trackController');
 
 routes.get('/', (req, res) => {
-    res.status(200).json({ message: 'Ok!' });
+    res.status(200).json({ message: 'All good!' });
 });
 
-routes.get('/tracks', (req, res) => {
-    res.status(200).json({ message: 'Hello from Tracks' });
-});
+routes.route('/tracks')
+    .post(trackController.upload);
+routes.route('/tracks/:track_id')
+    .delete(trackController.remove);
+routes.route('/tracks/:track_id/:start_time')
+    .get(trackController.play);
 
 routes.route('/users')
     .get(userController.all)
