@@ -1,21 +1,76 @@
+let User = require('../model/userModel');
 
 exports.all = function (req, res) {
-    res.status(200).json({ message: 'All users' });
+    User.get(function (err, users) {
+        if (err) {
+            res.json({
+                status: "erro",
+                message: err,
+            });
+        }
+        res.json({
+            status: "successo",
+            message: "Listagem executada com sucesso!",
+            users: users
+        });
+    });
 };
 
 exports.new = function (req, res) {
-    res.status(200).json({ message: 'New user' });
+    var user = new User();
+    user.name = req.body.name ? req.body.name : user.name;
+    user.email = req.body.email;
+    user.password = req.body.password;
+    
+    user.save(function (err) {
+    res.json({
+            message: 'Usuário criado!',
+            data: user
+        });
+    });
 };
 
 exports.view = function (req, res) {
-    res.status(200).json({ message: 'View user' });
+    User.findById(req.params.user_id, function (err, user) {
+        if (err)
+            res.send(err);
+        res.json({
+            message: 'Carregando detalhes...',
+            data: user
+        });
+    });
 };
 
 exports.update = function (req, res) {
-    res.status(200).json({ message: 'Update user' });
+    User.findById(req.params.user_id, function (err, user) {
+        if (err)
+            res.send(err);
+        user.name = req.body.name ? req.body.name : user.name;
+        user.email = req.body.email;
+        user.password = req.body.password;
+
+        user.save(function (err) {
+            if (err)
+                res.json(err);
+            res.json({
+                message: 'Dados atualizados!',
+                data: user
+            });
+        });
+    });
 };
 
 exports.delete = function (req, res) {
-    res.status(200).json({ message: 'Delete user' });
+    User.remove({
+        _id: req.params.user_id
+    }, function (err) {
+        if (err)
+            res.send(err);
+        res.json({
+                status: "successo",
+                message: 'Deletado!'
+            });
+        }
+    );
 };
 
