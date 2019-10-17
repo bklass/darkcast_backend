@@ -18,6 +18,7 @@ exports.all = function (req, res) {
 
 exports.new = function (req, res) {
     var user = new User();
+    console.log(req.body);
     user.name = req.body.name ? req.body.name : user.name;
     user.email = req.body.email;
     user.password = req.body.password;

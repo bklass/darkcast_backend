@@ -9,13 +9,13 @@ var userSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    create_date: {
-        type: Date,
-        default: Date.now
-    },
     password: {
         type: String,
         required: true
+    },
+    create_date: {
+        type: Date,
+        default: Date.now
     }
 });
 

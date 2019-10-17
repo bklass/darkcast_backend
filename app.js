@@ -1,9 +1,15 @@
 const express = require('express');
+const bodyParser = require('body-parser');
+
 const routes = require('./config/routes');
 const configs = require('./config/proprieties.json');
 const dbs = require('./config/db');
 
 const app = express();
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
+app.use(bodyParser.json());
 app.use(express.static('public'));
 
 app.use(function(req, res, next) {

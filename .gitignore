@@ -1,3 +1,4 @@
 node_modules/
 package-lock.json
 config/proprieties.json
+public/*.mp3
