@@ -13,6 +13,9 @@ var trackSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    key: {
+        type: String
+    },
     create_date: {
         type: Date,
         default: Date.now
