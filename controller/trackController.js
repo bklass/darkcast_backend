@@ -7,9 +7,6 @@ const s3 = new AWS.S3({
   secretAccessKey: configs.S3_SECRET
 });
 
-const getStat = require('util').promisify(fs.stat);
-const highWaterMark =  2;
-
 exports.play = function (req, res){
     Track.findById(req.params.track_id, function (err, track) {
         if (err)
@@ -27,31 +24,19 @@ exports.play = function (req, res){
                     Key: 'prd/'+track.key
                 };
             }
-            var filepath = 'temp/'+track.key;
         
             var s3Stream = s3.getObject(params).createReadStream();
-            var fileStream = fs.createWriteStream(filepath);
-            
+           
             s3Stream.on('error', function(err) {
                 console.error(err);
             });
-        
-            s3Stream.pipe(fileStream).on('error', function(err) {
-                console.error('File Stream:', err);
-            }).on('close', async function() {
-                const stream = fs.createReadStream(filepath, { highWaterMark });
-        
-                const stat = await getStat(filepath);
-
-                res.writeHead(200, {
-                    'Content-Type': 'audio/mp3',
-                    'Content-Length': stat.size
-                });
-            
-                stream.on('end', () => console.log("Track pronta!"));
-                stream.pipe(res);                
+            s3Stream.on('end', () => console.log("Track pronta!"));
+           
+            res.writeHead(200, {
+                'Content-Type': 'audio/mp3'
             });
             
+            s3Stream.pipe(res);        
     });    
 };
 
