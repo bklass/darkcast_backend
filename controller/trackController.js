@@ -8,7 +8,7 @@ const s3 = new AWS.S3({
 });
 
 exports.play = function (req, res){
-    Track.findById(req.params.track_id, function (err, track) {
+    Track.findById(req.params.track_id, async function (err, track) {
         if (err)
             res.send(err);
 
@@ -30,13 +30,37 @@ exports.play = function (req, res){
             s3Stream.on('error', function(err) {
                 console.error(err);
             });
-            s3Stream.on('end', () => console.log("Track pronta!"));
-           
-            res.writeHead(200, {
-                'Content-Type': 'audio/mp3'
-            });
+            s3Stream.on('end', () => console.log("Track pronta!"));            
             
-            s3Stream.pipe(res);        
+            s3.headObject(params).promise().then((headObjectData) => {
+                console.log(headObjectData);
+                var size = headObjectData.ContentLength;
+                var start = req.params.start_time; 
+                // var end =  size - 1;
+                // var chunksize = (size - start) + 1;
+
+                // console.log(size);
+                // console.log(start);
+                // console.log("bytes " + start + "-" + size + "/" + size);
+                // console.log(end);
+                // console.log(chunksize);
+                
+                res.writeHead(206, {
+                    "Content-Range": "bytes " + start + "-" + size + "/" + size,
+                    "Accept-Ranges": "bytes",
+                    // "Content-Length": chunksize,
+                    "Content-Type": "audio/mp3"
+                });
+
+                s3Stream.pipe(res);
+            });
+
+            // res.writeHead(200, {
+            //     'Content-Type': 'audio/mp3',
+
+            // });
+            // s3Stream.pipe(res);        
+            
     });    
 };
 
