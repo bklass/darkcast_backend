@@ -10,7 +10,7 @@ var termination = chalk.bold.magenta;
 if (configs.APP_ENV == 'development'){
     var url = 'mongodb://'+configs.DB_HOST+':'+configs.DB_PORT+'/'+configs.DB_NAME
 } else {
-    var url = 'mongodb+srv://'+configs.DB_USER+':'+DB_PASS+'@'+configs.DB_HOST+':'+configs.DB_PORT+'/'+configs.DB_NAME
+    var url = 'mongodb+srv://'+configs.DB_USER+':'+configs.DB_PASS+'@'+configs.DB_HOST+':'+configs.DB_PORT+'/'+configs.DB_NAME
 }
 
 mongoose.connect(url, {useUnifiedTopology: true,useNewUrlParser: true});
