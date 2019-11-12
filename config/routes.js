@@ -11,8 +11,7 @@ routes.route('/tracks')
     .post(multer({ dest: 'temp/', limits: { fieldSize: 8 * 1024 * 1024 } }).single('file'),
       trackController.upload);
 routes.route('/tracks/:track_id')
-    .delete(trackController.remove);
-routes.route('/tracks/:track_id/:start_time')
+    .delete(trackController.remove)
     .get(trackController.play);
 
 routes.route('/users')

@@ -32,34 +32,11 @@ exports.play = function (req, res){
             });
             s3Stream.on('end', () => console.log("Track pronta!"));            
             
-            s3.headObject(params).promise().then((headObjectData) => {
-                console.log(headObjectData);
-                var size = headObjectData.ContentLength;
-                var start = req.params.start_time; 
-                // var end =  size - 1;
-                // var chunksize = (size - start) + 1;
+            res.writeHead(200, {
+                'Content-Type': 'audio/mp3',
 
-                // console.log(size);
-                // console.log(start);
-                // console.log("bytes " + start + "-" + size + "/" + size);
-                // console.log(end);
-                // console.log(chunksize);
-                
-                res.writeHead(206, {
-                    "Content-Range": "bytes " + start + "-" + size + "/" + size,
-                    "Accept-Ranges": "bytes",
-                    // "Content-Length": chunksize,
-                    "Content-Type": "audio/mp3"
-                });
-
-                s3Stream.pipe(res);
             });
-
-            // res.writeHead(200, {
-            //     'Content-Type': 'audio/mp3',
-
-            // });
-            // s3Stream.pipe(res);        
+            s3Stream.pipe(res);        
             
     });    
 };
