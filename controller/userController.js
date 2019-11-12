@@ -22,6 +22,7 @@ exports.new = function (req, res) {
     user.name = req.body.name ? req.body.name : user.name;
     user.email = req.body.email;
     user.password = req.body.password;
+    user.track_saved = null;
     
     user.save(function (err) {
     res.json({
@@ -49,6 +50,17 @@ exports.update = function (req, res) {
         user.name = req.body.name ? req.body.name : user.name;
         user.email = req.body.email;
         user.password = req.body.password;
+
+        var track_saved_temp;
+        if (req.body.track_id) {
+            track_saved_temp = {
+                track_id: req.body.track_id,
+                time_in_seconds: req.body.time_in_seconds
+            };
+        } else {
+            track_saved_temp = null;
+        };
+        user.track_saved = track_saved_temp;
 
         user.save(function (err) {
             if (err)

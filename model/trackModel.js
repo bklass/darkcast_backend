@@ -16,6 +16,11 @@ var trackSchema = mongoose.Schema({
     key: {
         type: String
     },
+    options: {
+        track_id_child_1: String,
+        track_id_child_2: String,
+        track_id_father: String
+    },
     create_date: {
         type: Date,
         default: Date.now

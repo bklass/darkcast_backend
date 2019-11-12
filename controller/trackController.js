@@ -33,11 +33,9 @@ exports.play = function (req, res){
             s3Stream.on('end', () => console.log("Track pronta!"));            
             
             res.writeHead(200, {
-                'Content-Type': 'audio/mp3',
-
+                'Content-Type': 'audio/mp3'
             });
-            s3Stream.pipe(res);        
-            
+            s3Stream.pipe(res);                   
     });    
 };
 
@@ -64,6 +62,31 @@ exports.upload = function (req, res){
         track.time = req.body.time;
         track.filepath = data.Location;
         track.key = req.file.originalname;
+
+        var track_options;
+        if (req.body.track_id_father && req.body.track_id_child_1) {
+            track_options = {
+                track_id_child_1: req.body.track_id_child_1,
+                track_id_child_2: req.body.track_id_child_2,
+                track_id_father: req.body.track_id_father
+            }
+        } else if (!req.body.track_id_father && req.body.track_id_child_1) {
+            track_options = {
+                track_id_child_1: req.body.track_id_child_1,
+                track_id_child_2: req.body.track_id_child_2,
+                track_id_father: null
+            }
+        } else if (req.body.track_id_father && !req.body.track_id_child_1) {
+            track_options = {
+                track_id_child_1: null,
+                track_id_child_2: null,
+                track_id_father: req.body.track_id_father
+            }
+        } else {
+            track_options = null;
+        }
+        track.options = track_options;
+
         track.save(function (err) {
             res.json({
                 message: 'Track criada!',

@@ -13,6 +13,10 @@ var userSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    track_saved: {
+        track_id: String,
+        time_in_seconds: Number
+    },
     create_date: {
         type: Date,
         default: Date.now
