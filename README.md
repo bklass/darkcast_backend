@@ -155,6 +155,7 @@ touch proprieties.json
 npm start
 ```
 
+----
 ### Próximos passos
 
 * Adicionar login por redes sociais
