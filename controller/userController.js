@@ -16,20 +16,27 @@ exports.all = function (req, res) {
     });
 };
 
-exports.new = function (req, res) {
-    var user = new User();
-    console.log(req.body);
-    user.name = req.body.name ? req.body.name : user.name;
-    user.email = req.body.email;
-    user.password = req.body.password;
-    user.track_saved = null;
-    
-    user.save(function (err) {
-    res.json({
-            message: 'Usuário criado!',
-            data: user
+exports.new = async function (req, res) {
+    try {
+        var user = new User();
+        user.name = req.body.name ? req.body.name : user.name;
+        user.email = req.body.email;
+        user.password = req.body.password;
+        user.track_saved = null;    
+        
+        await user.save()
+        const token = await user.generateAuthToken()
+        res.json({
+            message: 'Usuário criado',
+            data: user,
+            token: token
         });
-    });
+    } catch (error) {
+        res.status(400).json({
+            status: "erro",
+            message: error,
+        });
+    };
 };
 
 exports.view = function (req, res) {
@@ -64,7 +71,10 @@ exports.update = function (req, res) {
 
         user.save(function (err) {
             if (err)
-                res.json(err);
+            res.status(400).json({
+                status: "erro",
+                message: err,
+            });
             res.json({
                 message: 'Dados atualizados!',
                 data: user
@@ -78,7 +88,10 @@ exports.delete = function (req, res) {
         _id: req.params.user_id
     }, function (err) {
         if (err)
-            res.send(err);
+        res.status(400).json({
+            status: "erro",
+            message: err,
+        });
         res.json({
                 status: "successo",
                 message: 'Deletado!'
@@ -87,3 +100,27 @@ exports.delete = function (req, res) {
     );
 };
 
+exports.login = async function (req, res){
+    try {
+        var { email, password } = req.body;
+        var user = await User.findByCredentials(email, password);
+        if (!user) {
+            return res.status(401).json({
+                status: "erro",
+                message: "Falha de autenticação!",
+            });
+        }
+        const token = await user.generateAuthToken();
+        res.json({
+            status: "successo",
+            message: "Login efetuado com sucesso!",
+            users: users,
+            token: token
+        });
+    } catch (error) {
+        res.status(400).json({
+            status: "erro",
+            message: error,
+        });
+    }
+};

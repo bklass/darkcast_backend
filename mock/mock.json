@@ -1,0 +1,82 @@
+[
+    {
+      "_id": "5dd5dde4de989f566003f0d4",
+      "index": 0,
+      "guid": "c0e0cb32-ef5f-42a3-994e-9cf6b98e6c43",
+      "isActive": false,
+      "balance": "$1,945.31",
+      "picture": "http://placehold.it/32x32",
+      "age": 26,
+      "eyeColor": "green",
+      "name": {
+        "first": "Rose",
+        "last": "Patterson"
+      },
+      "company": "ZUVY",
+      "favoriteFruit": "strawberry"
+    },
+    {
+      "_id": "5dd5dde4ef93dc29d44039e8",
+      "index": 1,
+      "guid": "c36c4387-2fb0-40d2-9031-90b618a62f6b",
+      "isActive": false,
+      "balance": "$3,800.66",
+      "picture": "http://placehold.it/32x32",
+      "age": 29,
+      "eyeColor": "brown",
+      "name": {
+        "first": "Lane",
+        "last": "Mcknight"
+      },
+      "company": "CYTREK",
+      "favoriteFruit": "apple"
+    },
+    {
+      "_id": "5dd5dde444aded48c6a3288e",
+      "index": 2,
+      "guid": "0fe143c1-90b1-47be-a3e4-68b420b747a9",
+      "isActive": false,
+      "balance": "$2,236.11",
+      "picture": "http://placehold.it/32x32",
+      "age": 23,
+      "eyeColor": "blue",
+      "name": {
+        "first": "Tameka",
+        "last": "Gonzalez"
+      },
+      "company": "CUJO",
+      "favoriteFruit": "apple"
+    },
+    {
+      "_id": "5dd5dde4e97eeb07300806b3",
+      "index": 3,
+      "guid": "dd094298-e341-42c1-a16b-fa1e1a09e8a9",
+      "isActive": true,
+      "balance": "$1,892.53",
+      "picture": "http://placehold.it/32x32",
+      "age": 32,
+      "eyeColor": "blue",
+      "name": {
+        "first": "Mitchell",
+        "last": "Deleon"
+      },
+      "company": "RONBERT",
+      "favoriteFruit": "banana"
+    },
+    {
+      "_id": "5dd5dde4d746588d8cb314e0",
+      "index": 4,
+      "guid": "0d138b5c-5eaf-4ba5-ab03-f5a62755e2aa",
+      "isActive": false,
+      "balance": "$3,441.13",
+      "picture": "http://placehold.it/32x32",
+      "age": 37,
+      "eyeColor": "brown",
+      "name": {
+        "first": "Navarro",
+        "last": "Lambert"
+      },
+      "company": "OVIUM",
+      "favoriteFruit": "apple"
+    }
+  ]

@@ -17,6 +17,8 @@ routes.route('/tracks/:track_id')
 routes.route('/users')
     .get(userController.all)
     .post(userController.new);
+routes.route('/users/login')
+    .post(userController.login);
 routes.route('/users/:user_id')
     .get(userController.view)
     .patch(userController.update)
