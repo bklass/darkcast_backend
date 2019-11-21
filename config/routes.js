@@ -1,5 +1,7 @@
 const routes = require('express').Router();
 const multer = require('multer');
+const fs = require('fs');
+
 const userController = require('../controller/userController');
 const trackController = require('../controller/trackController');
 
@@ -24,5 +26,10 @@ routes.route('/users/:user_id')
     .patch(userController.update)
     .put(userController.update)
     .delete(userController.delete);
+
+routes.route('/mock')
+    .get((req,res) => {
+        res.json(JSON.parse(fs.readFileSync('./mock/mock.json', 'utf8')));
+    });
 
 module.exports = routes;
