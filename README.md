@@ -8,7 +8,7 @@ O projeto consiste em fazer streaming de áudios assim como o seu upload e ter u
 Foi utilizado NodeJS, Express e MongoDB e AWS S3 no projeto.
 
 ----
-### Configurações
+## Configurações
 
 É necessário criar um arquivo chamado **proprieties.json** no caminho *config/*, abaixo são os campos que necessitam ser preenchidos.
 
@@ -29,7 +29,7 @@ Foi utilizado NodeJS, Express e MongoDB e AWS S3 no projeto.
 ```
 <s>Ps. Existe um arquivo de exemplo como guideline.</s>
 
-### Rotas
+## Rotas
 
 As rotas definidas são:
 + \<url\>/
@@ -156,7 +156,7 @@ npm start
 ```
 
 ----
-### Próximos passos
+## Próximos passos
 
 * Adicionar login por redes sociais
 * Criar CI/CD
