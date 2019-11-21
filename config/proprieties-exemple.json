@@ -1,12 +1,13 @@
 {
     "DB_HOST" : "<Database URL>",
     "DB_PORT" : <Database Port>,
-    "DB_USER" : "<Database user name>",
-    "DB_PASS" : "<Database user password>",
+    "DB_USER" : "<Database user name (can be null if development)>",
+    "DB_PASS" : "<Database user password (can be null if development)>",
     "DB_NAME" : "<Database Name>",
     "APP_PORT" : <Application Port to Listen>,
-    "APP_ENV" : "<Application Environment>",
+    "APP_ENV" : "<Application Environment (development || production)>",
     "S3_KEY" : "<AWS S3 Access Key>",
     "S3_SECRET" : "<AWS S3 Secret Access Key>",
-    "S3_BUCKET" : "<AWS S3 Bucket Name>"
+    "S3_BUCKET" : "<AWS S3 Bucket Name>",
+
 }
