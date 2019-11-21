@@ -24,8 +24,8 @@ exports.new = async function (req, res) {
         user.password = req.body.password;
         user.track_saved = null;    
         
-        await user.save()
-        const token = await user.generateAuthToken()
+        await user.save();
+        var token = await user.generateAuthToken();
         res.json({
             message: 'Usuário criado',
             data: user,
@@ -110,11 +110,11 @@ exports.login = async function (req, res){
                 message: "Falha de autenticação!",
             });
         }
-        const token = await user.generateAuthToken();
+        var token = await user.generateAuthToken();
         res.json({
             status: "successo",
             message: "Login efetuado com sucesso!",
-            users: users,
+            data: user,
             token: token
         });
     } catch (error) {
