@@ -11,6 +11,7 @@ routes.get('/api/', (req, res) => {
 });
 
 routes.route('/api/tracks')
+    .get(trackController.all)
     .post(multer({ dest: 'temp/', limits: { fieldSize: 8 * 1024 * 1024 } }).single('file'),
       trackController.upload);
 routes.route('/api/tracks/:track_id')

@@ -7,6 +7,22 @@ const s3 = new AWS.S3({
   secretAccessKey: configs.S3_SECRET
 });
 
+exports.all = function (req, res) {
+    Track.get(function (err, tracks) {
+        if (err) {
+            res.json({
+                status: "erro",
+                message: err,
+            });
+        }
+        res.json({
+            status: "successo",
+            message: "Listagem executada com sucesso!",
+            tracks: tracks
+        });
+    });
+};
+
 exports.play = function (req, res){
     Track.findById(req.params.track_id, async function (err, track) {
         if (err)
