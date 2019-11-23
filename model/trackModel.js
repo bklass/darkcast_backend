@@ -16,10 +16,18 @@ var trackSchema = mongoose.Schema({
     key: {
         type: String
     },
+    background: {
+        type: String,
+        required: true
+    },
     options: {
         track_id_child_1: String,
+        answer_child_1: String,
         track_id_child_2: String,
-        track_id_father: String
+        answer_child_2: String,
+        track_id_father: String,
+        question: String,
+        question_time: String
     },
     create_date: {
         type: Date,

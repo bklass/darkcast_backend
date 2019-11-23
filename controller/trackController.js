@@ -62,25 +62,38 @@ exports.upload = function (req, res){
         track.time = req.body.time;
         track.filepath = data.Location;
         track.key = req.file.originalname;
+        track.background = req.body.background;
 
         var track_options;
         if (req.body.track_id_father && req.body.track_id_child_1) {
             track_options = {
                 track_id_child_1: req.body.track_id_child_1,
                 track_id_child_2: req.body.track_id_child_2,
-                track_id_father: req.body.track_id_father
+                answer_child_1: req.body.answer_child_1,
+                answer_child_2: req.body.answer_child_2,
+                track_id_father: req.body.track_id_father,
+                question: req.body.question,
+                question_time: req.body.question_time
             }
         } else if (!req.body.track_id_father && req.body.track_id_child_1) {
             track_options = {
                 track_id_child_1: req.body.track_id_child_1,
                 track_id_child_2: req.body.track_id_child_2,
-                track_id_father: null
+                answer_child_1: req.body.answer_child_1,
+                answer_child_2: req.body.answer_child_2,
+                track_id_father: null,
+                question: req.body.question,
+                question_time: req.body.question_time
             }
         } else if (req.body.track_id_father && !req.body.track_id_child_1) {
             track_options = {
                 track_id_child_1: null,
                 track_id_child_2: null,
-                track_id_father: req.body.track_id_father
+                answer_child_1: null,
+                answer_child_2: null,
+                track_id_father: req.body.track_id_father,
+                question: null,
+                question_time: null
             }
         } else {
             track_options = null;
