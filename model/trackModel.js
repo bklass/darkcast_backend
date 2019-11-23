@@ -10,7 +10,7 @@ var trackSchema = mongoose.Schema({
         required: true
     },
     time: {
-        type: String,
+        type: Number,
         required: true
     },
     key: {

@@ -4,8 +4,8 @@ exports.all = function (req, res) {
     User.get(function (err, users) {
         if (err) {
             res.json({
-                status: "erro",
-                message: err,
+                success: false,
+                message: err
             });
         }
         res.json({
@@ -29,12 +29,11 @@ exports.new = async function (req, res) {
         res.json({
             message: 'Usuário criado',
             data: user,
-            token: token
         });
-    } catch (error) {
-        res.status(400).json({
-            status: "erro",
-            message: error,
+    } catch (err) {
+        res.json({
+            success: false,
+            message: err
         });
     };
 };
@@ -42,9 +41,13 @@ exports.new = async function (req, res) {
 exports.view = function (req, res) {
     User.findById(req.params.user_id, function (err, user) {
         if (err)
-            res.send(err);
+            res.json({
+                success: false,
+                message: err
+            });
         res.json({
-            message: 'Carregando detalhes...',
+            success: true,
+            message: 'Detalhes exibidos com sucesso!',
             data: user
         });
     });
@@ -53,7 +56,10 @@ exports.view = function (req, res) {
 exports.update = function (req, res) {
     User.findById(req.params.user_id, function (err, user) {
         if (err)
-            res.send(err);
+            res.json({
+                success: false,
+                message: err
+            });
         user.name = req.body.name ? req.body.name : user.name;
         user.email = req.body.email;
         user.password = req.body.password;
@@ -71,11 +77,12 @@ exports.update = function (req, res) {
 
         user.save(function (err) {
             if (err)
-            res.status(400).json({
+            res.json({
                 status: "erro",
                 message: err,
             });
             res.json({
+                success: true,
                 message: 'Dados atualizados!',
                 data: user
             });
@@ -89,8 +96,8 @@ exports.delete = function (req, res) {
     }, function (err) {
         if (err)
         res.status(400).json({
-            status: "erro",
-            message: err,
+            success: false,
+            message: err
         });
         res.json({
                 status: "successo",
@@ -105,22 +112,21 @@ exports.login = async function (req, res){
         var { email, password } = req.body;
         var user = await User.findByCredentials(email, password);
         if (!user) {
-            return res.status(401).json({
-                status: "erro",
-                message: "Falha de autenticação!",
+            return res.json({
+                success: false,
+                message: "Usuário não existente"
             });
         }
         var token = await user.generateAuthToken();
         res.json({
-            status: "successo",
+            success: true,
             message: "Login efetuado com sucesso!",
             data: user,
-            token: token
         });
-    } catch (error) {
-        res.status(400).json({
-            status: "erro",
-            message: error,
+    } catch (err) {
+        res.json({
+            success: false,
+            message: err,
         });
     }
 };

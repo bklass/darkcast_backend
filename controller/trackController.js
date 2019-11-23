@@ -11,14 +11,14 @@ exports.all = function (req, res) {
     Track.get(function (err, tracks) {
         if (err) {
             res.json({
-                status: "erro",
+                success: false,
                 message: err,
             });
         }
         res.json({
-            status: "successo",
+            success: true,
             message: "Listagem executada com sucesso!",
-            tracks: tracks
+            data: tracks
         });
     });
 };
@@ -26,7 +26,10 @@ exports.all = function (req, res) {
 exports.play = function (req, res){
     Track.findById(req.params.track_id, async function (err, track) {
         if (err)
-            res.send(err);
+            res.json({
+                success: false,
+                message: err,
+            });
 
             var params;
             if (configs.APP_ENV == 'development'){
@@ -131,12 +134,14 @@ exports.remove = function (req, res){
         _id: req.params.track_id
     }, function (err) {
         if (err)
-            res.send(err);
+        res.json({
+            success: false,
+            message: err,
+        });
         
         res.json({
-                status: "successo",
-                message: 'Deletado!'
-            });
-        }
-    );
+            success: true,
+            message: 'Deletado!'
+        });
+    });
 };

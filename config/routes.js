@@ -20,7 +20,12 @@ routes.route('/api/tracks/:track_id')
 
 routes.route('/api/users/me')
     .get(authLocal, async(req, res) => {
-        res.send(req.user);
+        console.log(req);
+        res.json({
+            success: true,
+            message: "",
+            data: req.user
+        });
     }
 );
 
