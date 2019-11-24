@@ -171,8 +171,8 @@ exports.update = function (req, res) {
             });
         
         track.name = req.body.name ? req.body.name : track.name;   
-        track.time = req.body.time;
-        track.background = req.body.background;
+        track.time = req.body.time ? req.body.time : track.time;
+        track.background = req.body.background ? req.body.background : track.background;
 
         var track_options;
         if (req.body.track_id_father && req.body.track_id_child_1) {
