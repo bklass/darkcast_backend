@@ -121,6 +121,7 @@ exports.upload = function (req, res){
 
         track.save(function (err) {
             res.json({
+                success: true,
                 message: 'Track criada!',
                 data: track
             });

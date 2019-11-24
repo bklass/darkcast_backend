@@ -15,8 +15,8 @@ var authLocal = async(req, res, next) => {
         req.token = token;
         next();
     } catch (error) {
-        res.status(401).json({
-            status: "erro",
+        res.json({
+            success: false,
             message: "Não autorizado!",
         });
     }

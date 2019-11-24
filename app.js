@@ -6,6 +6,15 @@ const configs = require('./config/proprieties.json');
 const dbs = require('./config/db');
 
 const app = express();
+
+process.on('unhandledRejection', (error, promise) => {
+    console.log(' Error to handle a promise rejection here: ', promise);
+    console.log(' The error was: ', error );
+});
+process.on('uncaughtException', (error) => {
+    console.log(' The exception was: ', error );
+});
+
 app.use(bodyParser.urlencoded({
     extended: true
 }));

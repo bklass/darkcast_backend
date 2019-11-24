@@ -9,9 +9,9 @@ exports.all = function (req, res) {
             });
         }
         res.json({
-            status: "successo",
+            success: true,
             message: "Listagem executada com sucesso!",
-            users: users
+            data: users
         });
     });
 };
@@ -27,6 +27,7 @@ exports.new = async function (req, res) {
         await user.save();
         var token = await user.generateAuthToken();
         res.json({
+            success: true,
             message: 'Usuário criado',
             data: user,
         });
@@ -77,10 +78,10 @@ exports.update = function (req, res) {
 
         user.save(function (err) {
             if (err)
-            res.json({
-                status: "erro",
-                message: err,
-            });
+                res.json({
+                    success: false,
+                    message: err,
+                });
             res.json({
                 success: true,
                 message: 'Dados atualizados!',
@@ -95,16 +96,15 @@ exports.delete = function (req, res) {
         _id: req.params.user_id
     }, function (err) {
         if (err)
-        res.status(400).json({
-            success: false,
-            message: err
-        });
-        res.json({
-                status: "successo",
-                message: 'Deletado!'
+            res.json({
+                success: false,
+                message: err
             });
-        }
-    );
+        res.json({
+            success: true,
+            message: 'Deletado!'
+        });
+    });
 };
 
 exports.login = async function (req, res){
