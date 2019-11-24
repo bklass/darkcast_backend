@@ -163,7 +163,7 @@ exports.view = function (req, res) {
 };
 
 exports.update = function (req, res) {
-    Track.findById(req.params.track, function (err, track) {
+    Track.findById(req.params.track_id, function (err, track) {
         if (err)
             res.json({
                 success: false,
