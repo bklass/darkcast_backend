@@ -7,7 +7,7 @@ const trackController = require('../controller/trackController');
 const authLocal = require('../auth/local');
 
 routes.get('/api/', (req, res) => {
-    res.status(200).json({ message: 'All good!' });
+    res.status(200).json({ success: true, message: 'All good!' });
 });
 
 routes.route('/api/tracks')
