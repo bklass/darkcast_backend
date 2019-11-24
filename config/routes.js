@@ -16,6 +16,10 @@ routes.route('/api/tracks')
       trackController.upload);
 routes.route('/api/tracks/:track_id')
     .delete(trackController.remove)
+    .patch(trackController.update)
+    .put(trackController.update)
+    .get(trackController.view);
+routes.route('/api/tracks/play/:track_id')
     .get(trackController.play);
 
 routes.route('/api/users/me')

@@ -146,3 +146,81 @@ exports.remove = function (req, res){
         });
     });
 };
+
+exports.view = function (req, res) {
+    Track.findById(req.params.track_id, function (err, track) {
+        if (err)
+            res.json({
+                success: false,
+                message: err
+            });
+        res.json({
+            success: true,
+            message: 'Detalhes exibidos com sucesso!',
+            data: track
+        });
+    });
+};
+
+exports.update = function (req, res) {
+    Track.findById(req.params.track, function (err, track) {
+        if (err)
+            res.json({
+                success: false,
+                message: err
+            });
+        
+        track.name = req.body.name ? req.body.name : track.name;   
+        track.time = req.body.time;
+        track.background = req.body.background;
+
+        var track_options;
+        if (req.body.track_id_father && req.body.track_id_child_1) {
+            track_options = {
+                track_id_child_1: req.body.track_id_child_1,
+                track_id_child_2: req.body.track_id_child_2,
+                answer_child_1: req.body.answer_child_1,
+                answer_child_2: req.body.answer_child_2,
+                track_id_father: req.body.track_id_father,
+                question: req.body.question,
+                question_time: req.body.question_time
+            }
+        } else if (!req.body.track_id_father && req.body.track_id_child_1) {
+            track_options = {
+                track_id_child_1: req.body.track_id_child_1,
+                track_id_child_2: req.body.track_id_child_2,
+                answer_child_1: req.body.answer_child_1,
+                answer_child_2: req.body.answer_child_2,
+                track_id_father: null,
+                question: req.body.question,
+                question_time: req.body.question_time
+            }
+        } else if (req.body.track_id_father && !req.body.track_id_child_1) {
+            track_options = {
+                track_id_child_1: null,
+                track_id_child_2: null,
+                answer_child_1: null,
+                answer_child_2: null,
+                track_id_father: req.body.track_id_father,
+                question: null,
+                question_time: null
+            }
+        } else {
+            track_options = null;
+        }
+        track.options = track_options;
+
+        track.save(function (err) {
+            if (err)
+                res.json({
+                    success: false,
+                    message: err,
+                });
+            res.json({
+                success: true,
+                message: 'Dados atualizados!',
+                data: track
+            });
+        });
+    });
+};
