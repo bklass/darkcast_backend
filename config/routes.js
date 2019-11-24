@@ -52,9 +52,15 @@ routes.route('/api/users/me/logout')
                 return token.token != req.token
             });
             await req.user.save();
-            res.send();
-        } catch (error) {
-            res.status(500).send(error);
+            res.json({
+                success: true,
+                message: "Logout efetuado com sucesso!"
+            });
+        } catch (err) {
+            res.json({
+                success: false,
+                message: err,
+            });
         }
     }
 );
@@ -63,9 +69,15 @@ routes.route('/api/users/me/logoutall')
         try {
             req.user.tokens.splice(0, req.user.tokens.length);
             await req.user.save();
-            res.send();
-        } catch (error) {
-            res.status(500).send(error);
+            res.json({
+                success: true,
+                message: "Logout de todos dispositivos efetuado com sucesso!"
+            });
+        } catch (err) {
+            res.json({
+                success: false,
+                message: err,
+            });
         }
     }
 );
