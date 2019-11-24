@@ -14,10 +14,10 @@ var authLocal = async(req, res, next) => {
         req.user = user;
         req.token = token;
         next();
-    } catch (error) {
+    } catch (err) {
         res.json({
             success: false,
-            message: "Não autorizado!",
+            message: err,
         });
     }
 };
