@@ -77,11 +77,14 @@ exports.upload = function (req, res){
         if (s3Err) throw s3Err
         fs.unlinkSync(req.file.path);
         var track = new Track();
-        track.name = req.body.name ? req.body.name : track.name;   
+        
+        track.name = req.body.name;   
         track.time = req.body.time;
+        track.background = req.body.background;
+        
         track.filepath = data.Location;
         track.key = req.file.originalname;
-        track.background = req.body.background;
+        
         track.options = null;
 
         track.save(function (err) {
@@ -136,47 +139,18 @@ exports.update = function (req, res) {
             });
         console.log(req.body);
         console.log(track);
-
-
+        
         track.name = req.body.name ? req.body.name : track.name;   
         track.time = req.body.time ? req.body.time : track.time;
         track.background = req.body.background ? req.body.background : track.background;
-
-        var track_options;
-        if (req.body.track_id_father && req.body.track_id_child_1) {
-            track_options = {
-                track_id_child_1: req.body.track_id_child_1,
-                track_id_child_2: req.body.track_id_child_2,
-                answer_child_1: req.body.answer_child_1,
-                answer_child_2: req.body.answer_child_2,
-                track_id_father: req.body.track_id_father,
-                question: req.body.question,
-                question_time: req.body.question_time
-            }
-        } else if (!req.body.track_id_father && req.body.track_id_child_1) {
-            track_options = {
-                track_id_child_1: req.body.track_id_child_1,
-                track_id_child_2: req.body.track_id_child_2,
-                answer_child_1: req.body.answer_child_1,
-                answer_child_2: req.body.answer_child_2,
-                track_id_father: null,
-                question: req.body.question,
-                question_time: req.body.question_time
-            }
-        } else if (req.body.track_id_father && !req.body.track_id_child_1) {
-            track_options = {
-                track_id_child_1: null,
-                track_id_child_2: null,
-                answer_child_1: null,
-                answer_child_2: null,
-                track_id_father: req.body.track_id_father,
-                question: null,
-                question_time: null
-            }
-        } else {
-            track_options = null;
-        }
-        track.options = track_options;
+                
+        track.options.track_id_father = req.body.track_id_father ? req.body.track_id_father :  track.options.track_id_father ? track.options.track_id_father : null;
+        track.options.track_id_child_1 = req.body.track_id_child_1 ? req.body.track_id_child_1 : track.options.track_id_child_1 ? track.options.track_id_child_1 : null;
+        track.options.answer_child_1 = req.body.answer_child_1 ? req.body.answer_child_1 :  track.options.answer_child_1 ? track.options.answer_child_1 : null;
+        track.options.track_id_child_2 = req.body.track_id_child_2 ? req.body.track_id_child_2 :  track.options.track_id_child_2 ? track.options.track_id_child_2 : null;
+        track.options.answer_child_2 = req.body.answer_child_2 ? req.body.answer_child_2 :  track.options.answer_child_2 ? track.options.answer_child_2 : null;
+        track.options.question = req.body.question ? req.body.question :  track.options.question ? track.options.question : null;
+        track.options.question_time = req.body.question_time ? req.body.question_time :  track.options.question_time ? track.options.question_time : null;
 
         track.save(function (err) {
             if (err)

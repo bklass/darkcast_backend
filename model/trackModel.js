@@ -27,7 +27,7 @@ var trackSchema = mongoose.Schema({
         answer_child_2: String,
         track_id_father: String,
         question: String,
-        question_time: String
+        question_time: Number
     },
     create_date: {
         type: Date,
