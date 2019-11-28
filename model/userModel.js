@@ -28,10 +28,8 @@ var userSchema = mongoose.Schema({
         minLength: 7,
     },
     tracks_saved: [{
-        track_saved: {
             track_id: String,
             time_in_seconds: Number
-        }
     }],
     tokens: [{
         token: {

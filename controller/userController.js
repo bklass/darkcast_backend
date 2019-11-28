@@ -19,13 +19,13 @@ exports.all = function (req, res) {
 exports.new = async function (req, res) {
     try {
         var user = new User();
-        user.name = req.body.name ? req.body.name : user.name;
+        user.name = req.body.name;
         user.email = req.body.email;
         user.password = req.body.password;
-        user.track_saved = null;    
+        user.tracks_saved = [];    
         
         await user.save();
-        var token = await user.generateAuthToken();
+        await user.generateAuthToken();
         res.json({
             success: true,
             message: "Usuário criado!",
@@ -62,19 +62,31 @@ exports.update = function (req, res) {
                 message: err
             });
         user.name = req.body.name ? req.body.name : user.name;
-        user.email = req.body.email;
-        user.password = req.body.password;
-
-        var track_saved_temp;
-        if (req.body.track_id) {
-            track_saved_temp = {
+        user.email = req.body.email ? req.body.email : user.email;
+        user.password = req.body.password ? req.body.password : user.password;
+        
+        if(req.body.track_id && req.body.time_in_seconds){            
+            user.tracks_saved.push({
                 track_id: req.body.track_id,
                 time_in_seconds: req.body.time_in_seconds
-            };
-        } else {
-            track_saved_temp = null;
-        };
-        user.track_saved = track_saved_temp;
+            })
+        } else if (req.body.track_id && !req.body.time_in_seconds){
+            res.json({
+                success: false,
+                message: "Deve ser adicionado o tempo em segundos!",
+            });
+        } else if (!req.body.track_id && req.body.time_in_seconds){
+            res.json({
+                success: false,
+                message: "Deve ser adicionada a ID da Track!",
+            });
+        }
+
+        if(req.body.remove_track_id){
+            user.tracks_saved = user.tracks_saved.filter(function(item) {
+                return item.track_id !== req.body.remove_track_id
+            })
+        }
 
         user.save(function (err) {
             if (err)
