@@ -28,7 +28,7 @@ exports.new = async function (req, res) {
         var token = await user.generateAuthToken();
         res.json({
             success: true,
-            message: 'Usuário criado',
+            message: "Usuário criado!",
             data: user,
         });
     } catch (err) {
@@ -48,7 +48,7 @@ exports.view = function (req, res) {
             });
         res.json({
             success: true,
-            message: 'Detalhes exibidos com sucesso!',
+            message: "Detalhes exibidos com sucesso!",
             data: user
         });
     });
@@ -84,7 +84,7 @@ exports.update = function (req, res) {
                 });
             res.json({
                 success: true,
-                message: 'Dados atualizados!',
+                message: "Dados atualizados!",
                 data: user
             });
         });
@@ -102,7 +102,7 @@ exports.delete = function (req, res) {
             });
         res.json({
             success: true,
-            message: 'Deletado!'
+            message: "Deletado com sucesso!"
         });
     });
 };
@@ -114,7 +114,7 @@ exports.login = async function (req, res){
         if (!user) {
             return res.json({
                 success: false,
-                message: "Usuário não existente"
+                message: "Usuário não existente!"
             });
         }
         var token = await user.generateAuthToken();

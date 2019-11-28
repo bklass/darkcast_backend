@@ -85,12 +85,18 @@ exports.upload = function (req, res){
         track.filepath = data.Location;
         track.key = req.file.originalname;
         
-        track.options = null;
+        track.options.track_id_father = null;
+        track.options.track_id_child_1 = null;
+        track.options.answer_child_1 = null;
+        track.options.track_id_child_2 = null;
+        track.options.answer_child_2 = null;
+        track.options.question = null;
+        track.options.question_time = null;        
 
         track.save(function (err) {
             res.json({
                 success: true,
-                message: 'Track criada!',
+                message: "Track criada!",
                 data: track
             });
         });
@@ -99,20 +105,50 @@ exports.upload = function (req, res){
 };
 
 exports.remove = function (req, res){
+    Track.findById(req.params.track_id, function (err, track) {
+        if (err)
+            res.json({
+                success: false,
+                message: err
+            });
+
+        var params;    
+        if (configs.APP_ENV == 'development'){
+            params = {
+                Bucket: configs.S3_BUCKET, 
+                Key: 'dev/'+track.key
+            };
+        } else {
+            params = {
+                Bucket: configs.S3_BUCKET, 
+                Key: 'prd/'+track.key
+            };
+        }
+
+        s3.deleteObject(params, function(err) {
+            if(err)
+                res.json({
+                    success: false,
+                    message: err,
+                });
+        });
+    });
+
     Track.remove({
         _id: req.params.track_id
     }, function (err) {
         if (err)
-        res.json({
-            success: false,
-            message: err,
-        });
-        
-        res.json({
-            success: true,
-            message: 'Deletado!'
-        });
+            res.json({
+                success: false,
+                message: err,
+            });
     });
+
+    res.json({
+        success: true,
+        message: "Deletado com sucesso!"
+    });
+   
 };
 
 exports.view = function (req, res) {
@@ -124,7 +160,7 @@ exports.view = function (req, res) {
             });
         res.json({
             success: true,
-            message: 'Detalhes exibidos com sucesso!',
+            message: "Detalhes exibidos com sucesso!",
             data: track
         });
     });
@@ -151,6 +187,12 @@ exports.update = function (req, res) {
         track.options.answer_child_2 = req.body.answer_child_2 ? req.body.answer_child_2 :  track.options.answer_child_2 ? track.options.answer_child_2 : null;
         track.options.question = req.body.question ? req.body.question :  track.options.question ? track.options.question : null;
         track.options.question_time = req.body.question_time ? req.body.question_time :  track.options.question_time ? track.options.question_time : null;
+        
+        if(req.body.key || req.body.filepath)
+            res.json({
+                success: false,
+                message: "Não se pode alterar o arquivo! Por favor, delete e reinsira ao invés de atualizar!",
+            });
 
         track.save(function (err) {
             if (err)
@@ -160,7 +202,7 @@ exports.update = function (req, res) {
                 });
             res.json({
                 success: true,
-                message: 'Dados atualizados!',
+                message: "Dados atualizados!",
                 data: track
             });
         });
