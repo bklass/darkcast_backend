@@ -24,7 +24,7 @@ Foi utilizado NodeJS, Express e MongoDB e AWS S3 no projeto.
     "S3_KEY" : "<AWS S3 Access Key>",
     "S3_SECRET" : "<AWS S3 Secret Access Key>",
     "S3_BUCKET" : "<AWS S3 Bucket Name>",
-
+    "JWT_KEY": "<Secret Key for tokens>"
 }
 ```
 <s>Ps. Existe um arquivo de exemplo como guideline.</s>
@@ -32,28 +32,34 @@ Foi utilizado NodeJS, Express e MongoDB e AWS S3 no projeto.
 ## Rotas
 
 As rotas definidas são:
-+ \<url\>/
-+ \<url\>/tracks
-    + POST \<url\>/tracks
-+ \<url\>/tracks/:track_id
-    + GET \<url\>/tracks/:track_id
-    + DELETE \<url\>/tracks/:track_id
-+ \<url\>/users
-    + GET \<url\>/users 
-    + POST \<url\>/users
-+ \<url\>/users/:user_id
-    + GET \<url\>/users/:user_id
-    + DELETE \<url\>/users/:user_id
-+ \<url\>/users/login
-    + POST \<url\>/users/login
-+ \<url\>/users/me
++ \<url\>/api
++ \<url\>/api/tracks
+    + POST \<url\>/api/tracks
++ \<url\>/api/tracks/:track_id
+    + GET \<url\>/api/tracks/:track_id
+    + DELETE \<url\>/api/tracks/:track_id
+    + PUT \<url\>/api/tracks/:track_id
+    + PATCH \<url\>/api/tracks/:track_id
++ \<url\>/api/tracks/play/:track_id
+    + GET \<url\>/api/tracks/play/:track_id
++ \<url\>/api/users
+    + GET \<url\>/api/users 
+    + POST \<url\>/api/users
++ \<url\>/api/users/:user_id
+    + GET \<url\>/api/users/:user_id
+    + DELETE \<url\>/api/users/:user_id
+    + PUT \<url\>/api/users/:user_id
+    + PATCH \<url\>/api/users/:user_id
++ \<url\>/api/users/login
+    + POST \<url\>/api/users/login
++ \<url\>/api/users/me
     + GET \<url\>/users/me
-+ \<url\>/users/me/logout
-    + POST \<url\>/users/me/logout
-+ \<url\>/users/me/logoutall
-    + POST \<url\>/users/me/logoutall
-+ \<url\>/mock
-    + GET \<url\>/mock
++ \<url\>/api/users/me/logout
+    + POST \<url\>/api/users/me/logout
++ \<url\>/api/users/me/logoutall
+    + POST \<url\>/api/users/me/logoutall
++ \<url\>/api/mock
+    + GET \<url\>/api/mock
 
 ## Modelo dos dados
 
@@ -83,10 +89,8 @@ name: {
         minLength: 7,
     },
     tracks_saved: [{
-        track_saved: {
-            track_id: String,
-            time_in_seconds: Number
-        }
+        track_id: String,
+        time_in_seconds: Number
     }],
     tokens: [{
         token: {
@@ -111,16 +115,24 @@ name: {
         required: true
     },
     time: {
-        type: String,
+        type: Number,
         required: true
     },
     key: {
         type: String
     },
+     background: {
+        type: String,
+        required: true
+    },
     options: {
         track_id_child_1: String,
+        answer_child_1: String,
         track_id_child_2: String,
-        track_id_father: String
+        answer_child_2: String,
+        track_id_father: String,
+        question: String,
+        question_time: Number
     },
     create_date: {
         type: Date,

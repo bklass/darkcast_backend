@@ -9,5 +9,5 @@
     "S3_KEY" : "<AWS S3 Access Key>",
     "S3_SECRET" : "<AWS S3 Secret Access Key>",
     "S3_BUCKET" : "<AWS S3 Bucket Name>",
-
+    "JWT_KEY": "<Secret Key for tokens>"
 }
