@@ -173,8 +173,6 @@ exports.update = function (req, res) {
                 success: false,
                 message: err
             });
-        console.log(req.body);
-        console.log(track);
         
         track.name = req.body.name ? req.body.name : track.name;   
         track.time = req.body.time ? req.body.time : track.time;

@@ -61,11 +61,17 @@ exports.update = function (req, res) {
                 success: false,
                 message: err
             });
-        console.log(req.body);
+
         user.name = req.body.name ? req.body.name : user.name;
         user.email = req.body.email ? req.body.email : user.email;
         user.password = req.body.password ? req.body.password : user.password;
         
+        if(req.body.remove_track_id){
+            user.tracks_saved = user.tracks_saved.filter(function(item) {
+                return item.track_id !== req.body.remove_track_id
+            })
+        }
+
         if(req.body.track_id && req.body.time_in_seconds){            
             user.tracks_saved.push({
                 track_id: req.body.track_id,
@@ -81,12 +87,6 @@ exports.update = function (req, res) {
                 success: false,
                 message: "Deve ser adicionada a ID da Track!",
             });
-        }
-
-        if(req.body.remove_track_id){
-            user.tracks_saved = user.tracks_saved.filter(function(item) {
-                return item.track_id !== req.body.remove_track_id
-            })
         }
 
         user.save(function (err) {
