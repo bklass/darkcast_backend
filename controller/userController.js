@@ -61,6 +61,7 @@ exports.update = function (req, res) {
                 success: false,
                 message: err
             });
+        console.log(req.body);
         user.name = req.body.name ? req.body.name : user.name;
         user.email = req.body.email ? req.body.email : user.email;
         user.password = req.body.password ? req.body.password : user.password;
