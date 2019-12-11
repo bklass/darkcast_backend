@@ -65,29 +65,33 @@ exports.update = function (req, res) {
         user.name = req.body.name ? req.body.name : user.name;
         user.email = req.body.email ? req.body.email : user.email;
         user.password = req.body.password ? req.body.password : user.password;
-        
-        if(req.body.remove_track_id){
-            user.tracks_saved = user.tracks_saved.filter(function(item) {
-                return item.track_id !== req.body.remove_track_id
-            })
-        }
+        user.tracks_saved = [{
+            track_id: req.body.track_id,
+            time_in_seconds: req.body.time_in_seconds
+        }];
 
-        if(req.body.track_id && req.body.time_in_seconds){            
-            user.tracks_saved.push({
-                track_id: req.body.track_id,
-                time_in_seconds: req.body.time_in_seconds
-            })
-        } else if (req.body.track_id && !req.body.time_in_seconds){
-            res.json({
-                success: false,
-                message: "Deve ser adicionado o tempo em segundos!",
-            });
-        } else if (!req.body.track_id && req.body.time_in_seconds){
-            res.json({
-                success: false,
-                message: "Deve ser adicionada a ID da Track!",
-            });
-        }
+        // if(req.body.remove_track_id){
+        //     user.tracks_saved = user.tracks_saved.filter(function(item) {
+        //         return item.track_id !== req.body.remove_track_id
+        //     })
+        // }
+
+        // if(req.body.track_id && req.body.time_in_seconds){            
+        //     user.tracks_saved.push({
+        //         track_id: req.body.track_id,
+        //         time_in_seconds: req.body.time_in_seconds
+        //     })
+        // } else if (req.body.track_id && !req.body.time_in_seconds){
+        //     res.json({
+        //         success: false,
+        //         message: "Deve ser adicionado o tempo em segundos!",
+        //     });
+        // } else if (!req.body.track_id && req.body.time_in_seconds){
+        //     res.json({
+        //         success: false,
+        //         message: "Deve ser adicionada a ID da Track!",
+        //     });
+        // }
 
         user.save(function (err) {
             if (err)
